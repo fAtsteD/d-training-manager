@@ -1,1 +1,0 @@
-print('DTrainingManager is developing...')
