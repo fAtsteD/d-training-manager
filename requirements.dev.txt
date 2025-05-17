@@ -1,5 +1,8 @@
 black
 isort
+faker
+moto
 mypy
 pytest
 pytest-cov
+pytest-env

@@ -14,4 +14,4 @@ def webhook_telegram():
     metrics.add_metric(name="WebhookTelegramInvocations", unit=MetricUnit.Count, value=1)
 
     logger.info("Telegram Webhook Event")
-    return 201
+    return None, 201

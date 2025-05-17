@@ -45,7 +45,6 @@ Resources:
             ApiId: !Ref DTrainingManagerHttpApi
       Environment:
         Variables:
-          LOG_LEVEL: INFO
           POWERTOOLS_SERVICE_NAME: d-training-manager
           POWERTOOLS_LOG_LEVEL: INFO
           POWERTOOLS_LOGGER_LOG_EVENT: true
