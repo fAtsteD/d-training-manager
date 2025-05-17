@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: DTrainingManager application
+
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 128
+    Runtime: python3.13
+    Tracing: Active
+
+Parameters:
+  Stage:
+    Type: String
+    Default: prod
+    Description: The stage for the application (e.g., dev, prod)
+    AllowedValues:
+      - dev
+      - prod
+    ConstraintDescription: Must be one of the allowed values.
+
+Resources:
+  DTrainingManagerHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      FailOnWarnings: true
+      Name: !Sub "d-training-manager-${Stage}-http-api"
+      StageName: !Ref Stage
+  DTrainingManagerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "d-training-manager-${Stage}-lambda"
+      Handler: d_training_manager.app.lambda_handler
+      CodeUri: .
+      Description: DTrainingManager API handler
+      Architectures:
+        - x86_64
+      Tracing: Active
+      Events:
+        ProxyPath:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+            ApiId: !Ref DTrainingManagerHttpApi
+      Environment:
+        Variables:
+          LOG_LEVEL: INFO
+          POWERTOOLS_SERVICE_NAME: d-training-manager
+          POWERTOOLS_LOG_LEVEL: INFO
+          POWERTOOLS_LOGGER_LOG_EVENT: true
+          POWERTOOLS_METRICS_NAMESPACE: DTrainingManager
+          STAGE: !Ref Stage
+      Tags:
+        LambdaPowertools: python
+    Metadata:
+      BuildMethod: makefile
+
+Outputs:
+  DTrainingManagerHttpApiUrl:
+    Description: "API Gateway endpoint URL for Swagger page"
+    Value: !Sub "https://${DTrainingManagerHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${Stage}/swagger"
+
+  DTrainingManagerFunction:
+    Description: "DTrainingManager Lambda Function ARN"
+    Value: !GetAtt DTrainingManagerFunction.Arn
