@@ -9,6 +9,7 @@ from tests.conftest import LambdaContext
 def test_access_webhook_telegram(
     faker: faker.Faker,
     lambda_context: LambdaContext,
+    stage: str,
 ):
     """
     Test the access to the telegram webhook
@@ -17,13 +18,13 @@ def test_access_webhook_telegram(
     response = app.lambda_handler(
         context=lambda_context,
         event={
-            "rawPath": "/test/webhook/telegram",
+            "rawPath": f"/{stage}/webhook/telegram",
             "requestContext": {
                 "requestContext": {"requestId": str(faker.uuid4())},
                 "http": {
                     "method": "POST",
                 },
-                "stage": "test",
+                "stage": stage,
             },
         },
     )

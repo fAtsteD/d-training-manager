@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass
 
 import faker
@@ -20,10 +21,15 @@ def lambda_context(faker: faker.Faker) -> LambdaContext:
     )
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(autouse=True)
 def mocked_aws():
     """
     Mock all AWS interactions
     """
     with mock_aws():
         yield
+
+
+@pytest.fixture
+def stage():
+    return os.getenv("STAGE", "test")
