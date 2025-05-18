@@ -1,31 +1,13 @@
-import os
-
-import faker
-
-from d_training_manager import app
-from tests.conftest import LambdaContext
+from tests.fixtures.app import HttpApiTestClient
 
 
 def test_access_webhook_telegram(
-    faker: faker.Faker,
-    lambda_context: LambdaContext,
-    stage: str,
+    http_api_client: HttpApiTestClient,
 ):
     """
     Test the access to the telegram webhook
     """
-    print(os.getenv("POWERTOOLS_METRICS_NAMESPACE"))
-    response = app.lambda_handler(
-        context=lambda_context,
-        event={
-            "rawPath": f"/{stage}/webhook/telegram",
-            "requestContext": {
-                "requestContext": {"requestId": str(faker.uuid4())},
-                "http": {
-                    "method": "POST",
-                },
-                "stage": stage,
-            },
-        },
+    response = http_api_client.post(
+        path=f"/webhook/telegram",
     )
-    assert response["statusCode"] == 201
+    assert response.status_code == 201
