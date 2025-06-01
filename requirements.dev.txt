@@ -3,6 +3,7 @@ isort
 faker
 moto
 mypy
+pyright
 pytest
 pytest-cov
 pytest-env
