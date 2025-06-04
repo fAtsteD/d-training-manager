@@ -21,8 +21,9 @@ ignore_missing_imports = true
 [tool.pyright]
 include = ["src", "tests"]
 pythonVersion = "3.13"
-useLibraryCodeForTypes = true
+reportUnusedImport = true
 typeCheckingMode = "standard"
+useLibraryCodeForTypes = true
 
 [tool.pytest.ini_options]
 addopts = "-ra"
