@@ -3,10 +3,29 @@ build-backend = "setuptools.build_meta"
 requires = ["setuptools"]
 
 [project]
-dynamic = ["dependencies", "optional-dependencies"]
 name = "d-training-manager"
-requires-python = "==3.13"
+requires-python = "==3.13.*"
 version = "0.0.1"
+dependencies = [
+    "aws-lambda-powertools[tracer]==3.10.*",
+    "boto3==1.37.*",
+    "pydantic==2.11.*",
+    "pytelegrambotapi==4.26.*",
+    "requests==2.32.*",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "faker>=37.3.0",
+    "isort>=6.0.1",
+    "moto>=5.1.5",
+    "mypy>=1.16.0",
+    "pyright>=1.1.401",
+    "pytest>=8.4.0",
+    "pytest-cov>=6.1.1",
+    "pytest-env>=1.1.5",
+]
 
 [tool.black]
 line-length = 120
@@ -40,7 +59,3 @@ testpaths = ["tests"]
 
 [tool.setuptools]
 include-package-data = true
-
-[tool.setuptools.dynamic]
-dependencies = { file = ["requirements.txt"] }
-optional-dependencies = { dev = { file = ["requirements.dev.txt"] } }

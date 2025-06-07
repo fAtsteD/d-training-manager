@@ -1,5 +1,0 @@
-aws-lambda-powertools[tracer]==3.10.*
-boto3==1.37.*
-pydantic==2.11.*
-pyTelegramBotAPI==4.26.*
-requests==2.32.*
