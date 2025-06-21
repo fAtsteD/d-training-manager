@@ -51,6 +51,7 @@ env = [
     "POWERTOOLS_LOG_LEVEL=INFO",
     "POWERTOOLS_LOGGER_LOG_EVENT=true",
     "POWERTOOLS_METRICS_NAMESPACE=DTrainingManagerTest",
+    "TELEGRAM_API_TOKEN=1234567890:test_token",
     "STAGE=test",
 ]
 minversion = "8.0"

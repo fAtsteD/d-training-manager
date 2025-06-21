@@ -5,6 +5,7 @@ from moto import mock_aws
 
 pytest_plugins = [
     "tests.fixtures.app",
+    "tests.fixtures.telegram",
 ]
 
 

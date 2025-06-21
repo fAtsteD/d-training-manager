@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from aws_lambda_powertools import Logger, Metrics, Tracer
 from aws_lambda_powertools.event_handler import APIGatewayHttpResolver
 from aws_lambda_powertools.logging import correlation_paths
@@ -9,7 +11,10 @@ from d_training_manager.app import webhook_telegram
 tracer = Tracer()
 logger = Logger()
 metrics = Metrics()
-app = APIGatewayHttpResolver(enable_validation=True)
+app = APIGatewayHttpResolver(
+    enable_validation=True,
+    response_validation_error_http_code=HTTPStatus.INTERNAL_SERVER_ERROR,
+)
 app.include_router(webhook_telegram.router, prefix="/webhook/telegram")
 
 if not config.app.is_production:
