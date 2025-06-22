@@ -1,9 +1,6 @@
 build-DTrainingManagerFunction:
-	mkdir -p $(ARTIFACTS_DIR)/d_training_manager
-	cd src/d_training_manager && find . -type f -name '*.py' -exec cp --parents {} $(ARTIFACTS_DIR)/d_training_manager \; && cd - > /dev/null
-	cp requirements.txt $(ARTIFACTS_DIR)
-	python -m pip install -r requirements.txt -t $(ARTIFACTS_DIR)
-	rm -rf $(ARTIFACTS_DIR)/bin
+	uv export --frozen --no-dev --no-editable --no-hashes --no-annotate --no-header -o "$(ARTIFACTS_DIR)/requirements.txt" --no-progress --no-python-downloads
+	uv pip install --no-build-isolation --target $(ARTIFACTS_DIR) -r "$(ARTIFACTS_DIR)/requirements.txt" --no-progress --no-python-downloads
 
 check: lint check-types
 

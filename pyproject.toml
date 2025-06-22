@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools"]
+requires = ["setuptools", "wheel"]
 
 [project]
 name = "d-training-manager"
@@ -15,6 +15,10 @@ dependencies = [
 ]
 
 [dependency-groups]
+build = [
+    "setuptools>=80.9.0",
+    "wheel>=0.45.1",
+]
 dev = [
     "black>=25.1.0",
     "faker>=37.3.0",
