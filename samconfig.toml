@@ -4,7 +4,10 @@ version = 0.1
 
 [default.global.parameters]
 stack_name = "d-training-manager"
-parameter_overrides = "Stage=prod"
+parameter_overrides = [
+    "Stage=prod",
+    "SecretsManagerTelegramApiKeyName=d-training-manager-prod/telegram-api-key",
+]
 
 [default.build.parameters]
 cached = true
@@ -26,7 +29,10 @@ watch = true
 
 [dev.global.parameters]
 stack_name = "d-training-manager"
-parameter_overrides = "Stage=dev"
+parameter_overrides = [
+    "Stage=dev",
+    "SecretsManagerTelegramApiKeyName=d-training-manager-dev/telegram-api-key",
+]
 
 [dev.build.parameters]
 cached = true

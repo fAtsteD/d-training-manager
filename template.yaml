@@ -18,6 +18,10 @@ Parameters:
       - dev
       - prod
     ConstraintDescription: Must be one of the allowed values.
+  SecretsManagerTelegramApiKeyName:
+    Type: String
+    Default: d-training-manager/telegram-api-key
+    Description: The name of the secret form Secrets Manager containing the Telegram API key.
 
 Resources:
   DTrainingManagerHttpApi:
@@ -49,7 +53,15 @@ Resources:
           POWERTOOLS_LOG_LEVEL: INFO
           POWERTOOLS_LOGGER_LOG_EVENT: true
           POWERTOOLS_METRICS_NAMESPACE: DTrainingManager
+          TELEGRAM_API_TOKEN: !Ref SecretsManagerTelegramApiKeyName
           STAGE: !Ref Stage
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${SecretsManagerTelegramApiKeyName}-*
       Tags:
         LambdaPowertools: python
     Metadata:
