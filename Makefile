@@ -1,6 +1,10 @@
 build-DTrainingManagerFunction:
-	uv export --frozen --no-dev --no-editable --no-hashes --no-annotate --no-header -o "$(ARTIFACTS_DIR)/requirements.txt" --no-progress --no-python-downloads
-	uv pip install --no-build-isolation --target $(ARTIFACTS_DIR) -r "$(ARTIFACTS_DIR)/requirements.txt" --no-progress --no-python-downloads
+	uv pip install --no-installer-metadata --no-compile-bytecode --python-platform x86_64-manylinux2014 --no-build-isolation --target $(ARTIFACTS_DIR) --no-progress --no-python-downloads --no-deps .
+
+build-DTrainingManagerFunctionLayer:
+	uv export --frozen --no-dev --no-editable --no-hashes --no-annotate --no-header --no-emit-project -o "$(ARTIFACTS_DIR)/requirements.txt" --no-progress --no-python-downloads
+	uv pip install --no-installer-metadata --no-compile-bytecode --python-platform x86_64-manylinux2014 --no-build-isolation --target "$(ARTIFACTS_DIR)/python" -r "$(ARTIFACTS_DIR)/requirements.txt" --no-progress --no-python-downloads
+	rm -f "$(ARTIFACTS_DIR)/requirements.txt"
 
 check: lint check-types
 

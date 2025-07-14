@@ -4,12 +4,25 @@ Description: DTrainingManager application
 
 Globals:
   Function:
-    Timeout: 5
+    Architectures:
+      - x86_64
     MemorySize: 128
-    Runtime: python3.13
+    Runtime: !Ref PythonRuntimeVersion
+    Timeout: 5
     Tracing: Active
 
 Parameters:
+  PythonRuntimeVersion:
+    Type: String
+    Default: python3.13
+    Description: The Python runtime version to use for the Lambda function.
+    AllowedValues:
+      - python3.13
+    ConstraintDescription: Must be a valid Python runtime version.
+  SecretsManagerTelegramApiKeyName:
+    Type: String
+    Default: d-training-manager/telegram-api-key
+    Description: The name of the secret form Secrets Manager containing the Telegram API key.
   Stage:
     Type: String
     Default: prod
@@ -18,10 +31,6 @@ Parameters:
       - dev
       - prod
     ConstraintDescription: Must be one of the allowed values.
-  SecretsManagerTelegramApiKeyName:
-    Type: String
-    Default: d-training-manager/telegram-api-key
-    Description: The name of the secret form Secrets Manager containing the Telegram API key.
 
 Resources:
   DTrainingManagerHttpApi:
@@ -37,9 +46,8 @@ Resources:
       Handler: d_training_manager.app.lambda_handler
       CodeUri: .
       Description: DTrainingManager API handler
-      Architectures:
-        - x86_64
-      Tracing: Active
+      Layers:
+        - !Ref DTrainingManagerFunctionLayer
       Events:
         ProxyPath:
           Type: HttpApi
@@ -64,6 +72,16 @@ Resources:
               Resource: arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${SecretsManagerTelegramApiKeyName}-*
       Tags:
         LambdaPowertools: python
+    Metadata:
+      BuildMethod: makefile
+  DTrainingManagerFunctionLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: !Sub "d-training-manager-${Stage}-lambda-layer"
+      Description: DTrainingManager Lambda Layer
+      ContentUri: .
+      CompatibleRuntimes:
+        - python3.13
     Metadata:
       BuildMethod: makefile
 
