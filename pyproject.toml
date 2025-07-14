@@ -15,10 +15,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-build = [
-    "setuptools>=80.9.0",
-    "wheel>=0.45.1",
-]
+build = ["setuptools>=80.9.0", "wheel>=0.45.1"]
 dev = [
     "black>=25.1.0",
     "faker>=37.3.0",
@@ -35,7 +32,10 @@ dev = [
 line-length = 120
 
 [tool.isort]
+line_length = 120
 profile = "black"
+extend_skip = [".aws-sam"]
+py_version = 313
 
 [[tool.mypy.overrides]]
 module = ["telebot.*"]
