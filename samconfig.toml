@@ -4,10 +4,7 @@ version = 0.1
 
 [default.global.parameters]
 stack_name = "d-training-manager"
-parameter_overrides = [
-    "Stage=prod",
-    "SecretsManagerTelegramApiKeyName=d-training-manager-prod/telegram-api-key",
-]
+parameter_overrides = ["Stage=prod"]
 
 [default.build.parameters]
 cached = true
@@ -27,33 +24,8 @@ resolve_s3 = true
 [default.sync.parameters]
 watch = true
 
-[dev.global.parameters]
-stack_name = "d-training-manager"
-parameter_overrides = [
-    "Stage=dev",
-    "SecretsManagerTelegramApiKeyName=d-training-manager-dev/telegram-api-key",
-]
-
-[dev.build.parameters]
-cached = true
-parallel = true
-
-[dev.validate.parameters]
-lint = true
-
-[dev.deploy.parameters]
-capabilities = "CAPABILITY_IAM"
-confirm_changeset = true
-resolve_s3 = true
-
-[dev.package.parameters]
-resolve_s3 = true
-
-[dev.sync.parameters]
-watch = true
-
-[dev.local_start_api.parameters]
+[default.local_start_api.parameters]
 warm_containers = "EAGER"
 
-[dev.local_start_lambda.parameters]
+[default.local_start_lambda.parameters]
 warm_containers = "EAGER"

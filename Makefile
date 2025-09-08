@@ -1,3 +1,5 @@
+include .env
+
 build-DTrainingManagerFunction:
 	uv pip install --no-installer-metadata --no-compile-bytecode --python-platform x86_64-manylinux2014 --no-build-isolation --target $(ARTIFACTS_DIR) --no-progress --no-python-downloads --no-deps .
 
@@ -36,6 +38,16 @@ mypy:
 pyright:
 	pyright src
 	pyright tests
+
+sam-build-prod:
+	sam build --parameter-overrides Stage=prod TelegramApiKey=$(TELEGRAM_API_TOKEN)
+
+sam-build-dev:
+	sam build --parameter-overrides Stage=dev TelegramApiKey=$(TELEGRAM_API_TOKEN) DBConnection=$(DB_CONNECTION) DBHost=$(DB_HOST) DBPort=$(DB_PORT)
+
+sam-local-start: sam-build-dev
+	docker-compose -f docker-compose.dev.yml up -d
+	sam local start-api --parameter-overrides Stage=dev TelegramApiKey=$(TELEGRAM_API_TOKEN) DBConnection=$(DB_CONNECTION) DBHost=$(DB_HOST) DBPort=$(DB_PORT)
 
 test:
 	pytest

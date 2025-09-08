@@ -11,18 +11,58 @@ It requires AWS SAM, uv preinstalled and set up.
 3. Create from example file .env
 4. Install project with dependencies for local develpment
 
-   ```bash
-   make init
-   ```
+    ```bash
+    make init
+    ```
 
-5. Build dev environment for local usage
+5. Pull and up required services
 
-   ```bash
-   sam build --config-env dev
-   ```
+    ```bash
+    docker compose -f docker-compose.dev.yml up -d
+    ```
 
 6. Start local container with lambda function
 
-   ```bash
-   sam local start-api --config-env dev
-   ```
+    ```bash
+    make sam-local-start
+    ```
+
+Project has linter and type checking thought make commands
+
+- lint and type check
+
+    ```bash
+    make check
+    ```
+
+- lint check
+
+    ```bash
+    make lint
+    ```
+
+- lint check and fix
+
+    ```bash
+    make format
+    ```
+
+- type check
+
+    ```bash
+    make check-types
+    ```
+
+## Tests
+
+The project uses tests for checking functionality. Run tests:
+
+```bash
+make test
+```
+
+Test with coverage information
+
+```bash
+make test-coverage
+```
