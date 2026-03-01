@@ -9,8 +9,9 @@ version = "0.0.1"
 dependencies = [
     "aws-lambda-powertools[tracer]==3.10.*",
     "boto3==1.37.*",
+    "factory-boy==3.3.*",
     "pydantic==2.11.*",
-    "pynamodb>=6.1.0",
+    "pynamodb==6.1.*",
     "pytelegrambotapi==4.26.*",
     "requests==2.32.*",
 ]
@@ -21,7 +22,7 @@ dev = [
     "black>=25.1.0",
     "faker>=37.3.0",
     "isort>=6.0.1",
-    "moto>=5.1.5",
+    "moto>=5.1.19",
     "mypy>=1.16.0",
     "pyright>=1.1.401",
     "pytest>=8.4.0",
@@ -52,12 +53,16 @@ useLibraryCodeForTypes = true
 [tool.pytest.ini_options]
 addopts = "-ra"
 env = [
+    "AWS_ACCESS_KEY_ID=test",
+    "AWS_DEFAULT_REGION=us-west-1",
+    "AWS_SECRET_ACCESS_KEY=test",
+    "DB_URL=", # Empty to reset any settings from local environment variables. Tests use moto to mock AWS services
     "POWERTOOLS_SERVICE_NAME=d-training-manager-test",
     "POWERTOOLS_LOG_LEVEL=INFO",
     "POWERTOOLS_LOGGER_LOG_EVENT=true",
     "POWERTOOLS_METRICS_NAMESPACE=DTrainingManagerTest",
-    "TELEGRAM_API_TOKEN=1234567890:test_token",
     "STAGE=test",
+    "TELEGRAM_API_TOKEN=1234567890:test_token",
 ]
 minversion = "8.0"
 pythonpath = ["src"]

@@ -8,9 +8,10 @@ from aws_lambda_powertools.utilities.typing import LambdaContext
 from d_training_manager import config
 from d_training_manager.app import webhook_telegram
 
-tracer = Tracer()
 logger = Logger()
 metrics = Metrics()
+tracer = Tracer()
+
 app = APIGatewayHttpResolver(
     enable_validation=True,
     response_validation_error_http_code=HTTPStatus.INTERNAL_SERVER_ERROR,

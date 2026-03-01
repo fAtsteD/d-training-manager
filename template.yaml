@@ -12,18 +12,10 @@ Globals:
     Tracing: Active
 
 Parameters:
-  DBConnection:
+  DdUrl:
     Type: String
     Default: ""
-    Description: Type of connection to database. It mostly uses for local development.
-  DBHost:
-    Type: String
-    Default: ""
-    Description: Host of database. It mostly uses for local development.
-  DBPort:
-    Type: String
-    Default: ""
-    Description: Port of database. It mostly uses for local development.
+    Description: URL to connect to the database. It mostly uses for local development.
   PythonRuntimeVersion:
     Type: String
     Default: python3.13
@@ -63,9 +55,7 @@ Resources:
             ApiId: !Ref DTrainingManagerHttpApi
       Environment:
         Variables:
-          DB_CONNECTION: !Ref DBConnection
-          DB_HOST: !Ref DBHost
-          DB_PORT: !Ref DBPort
+          DB_URL: !Ref DdUrl
           POWERTOOLS_SERVICE_NAME: d-training-manager
           POWERTOOLS_LOG_LEVEL: INFO
           POWERTOOLS_LOGGER_LOG_EVENT: true
@@ -121,9 +111,6 @@ Resources:
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
       BillingMode: PAY_PER_REQUEST
 
 Outputs:

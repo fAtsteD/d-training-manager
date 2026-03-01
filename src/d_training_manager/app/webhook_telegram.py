@@ -4,10 +4,11 @@ from aws_lambda_powertools.metrics import MetricUnit
 
 from d_training_manager.telegram import bot
 
-metrics = Metrics(service="webhook-telegram")
 router = Router()
-tracer = Tracer()
+
 logger = Logger(child=True)
+metrics = Metrics(service="webhook-telegram")
+tracer = Tracer()
 
 
 @router.post("/")

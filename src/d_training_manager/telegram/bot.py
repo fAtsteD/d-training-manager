@@ -1,7 +1,7 @@
 import telebot
 
 from d_training_manager import config
-from d_training_manager.telegram.handlers import help
+from d_training_manager.telegram.handlers import handler_help
 
 
 def create_bot() -> telebot.TeleBot:
@@ -23,7 +23,7 @@ def process_update_dict(update: dict) -> None:
 
 def register_handlers(bot: telebot.TeleBot) -> None:
     bot.register_message_handler(
-        callback=help.send_help,
+        callback=handler_help.send_help,
         commands=["help", "start"],
         pass_bot=True,
     )

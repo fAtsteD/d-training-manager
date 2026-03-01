@@ -43,11 +43,11 @@ sam-build-prod:
 	sam build --parameter-overrides Stage=prod TelegramApiKey=$(TELEGRAM_API_TOKEN)
 
 sam-build-dev:
-	sam build --parameter-overrides Stage=dev TelegramApiKey=$(TELEGRAM_API_TOKEN) DBConnection=$(DB_CONNECTION) DBHost=$(DB_HOST) DBPort=$(DB_PORT)
+	sam build --parameter-overrides Stage=dev TelegramApiKey=$(TELEGRAM_API_TOKEN) DdUrl=$(DB_URL)
 
 sam-local-start: sam-build-dev
 	docker-compose -f docker-compose.dev.yml up -d
-	sam local start-api --parameter-overrides Stage=dev TelegramApiKey=$(TELEGRAM_API_TOKEN) DBConnection=$(DB_CONNECTION) DBHost=$(DB_HOST) DBPort=$(DB_PORT)
+	sam local start-api --parameter-overrides Stage=dev TelegramApiKey=$(TELEGRAM_API_TOKEN) DdUrl=$(DB_URL)
 
 test:
 	pytest
