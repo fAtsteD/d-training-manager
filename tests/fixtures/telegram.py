@@ -3,13 +3,14 @@ from typing import Optional, Protocol, TypedDict, Union
 
 import faker
 import pytest
-import telebot
+from telebot import REPLY_MARKUP_TYPES, TeleBot
+from telebot.types import LinkPreviewOptions, Message, MessageEntity, ReplyParameters
 
 from d_training_manager import config
 from d_training_manager.telegram import bot
 
 
-class TelebotMock(telebot.TeleBot):
+class TelebotMock(TeleBot):
     def __init__(self, faker: faker.Faker, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.faker = faker
@@ -20,28 +21,28 @@ class TelebotMock(telebot.TeleBot):
         chat_id: Union[int, str],
         text: str,
         parse_mode: Optional[str] = None,
-        entities: Optional[list[telebot.types.MessageEntity]] = None,
+        entities: Optional[list[MessageEntity]] = None,
         disable_web_page_preview: Optional[bool] = None,
         disable_notification: Optional[bool] = None,
         protect_content: Optional[bool] = None,
         reply_to_message_id: Optional[int] = None,
         allow_sending_without_reply: Optional[bool] = None,
-        reply_markup: Optional[telebot.REPLY_MARKUP_TYPES] = None,
+        reply_markup: Optional[REPLY_MARKUP_TYPES] = None,
         timeout: Optional[int] = None,
         message_thread_id: Optional[int] = None,
-        reply_parameters: Optional[telebot.types.ReplyParameters] = None,
-        link_preview_options: Optional[telebot.types.LinkPreviewOptions] = None,
+        reply_parameters: Optional[ReplyParameters] = None,
+        link_preview_options: Optional[LinkPreviewOptions] = None,
         business_connection_id: Optional[str] = None,
         message_effect_id: Optional[str] = None,
         allow_paid_broadcast: Optional[bool] = None,
-    ) -> telebot.types.Message:
+    ) -> Message:
         self.send_messages.append(
             {
                 "chat_id": chat_id,
                 "text": text,
             }
         )
-        return telebot.types.Message.de_json(
+        return Message.de_json(
             {
                 "message_id": self.faker.random_int(min=1, max=1000000),
                 "from": {
