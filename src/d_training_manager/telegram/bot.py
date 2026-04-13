@@ -24,7 +24,7 @@ def process_update_dict(update: dict) -> None:
 
 def register_handlers(bot: TeleBot) -> None:
     bot.register_message_handler(
-        callback=handler_help.send_help,
+        callback=handler_help.process_message,
         commands=["help", "start"],
         pass_bot=True,
     )
