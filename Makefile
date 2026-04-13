@@ -13,8 +13,8 @@ check: lint check-types
 check-types: pyright mypy
 
 format:
-	isort .
-	black .
+	uv run isort .
+	uv run black .
 
 format-check: format check-types
 
@@ -28,16 +28,16 @@ install-hooks:
 	chmod +x .git/hooks/*
 
 lint:
-	isort --check-only .
-	black --check .
+	uv run isort --check-only .
+	uv run black --check .
 
 mypy:
-	mypy src
-	mypy tests
+	uv run mypy src
+	uv run mypy tests
 
 pyright:
-	pyright src
-	pyright tests
+	uv run pyright src
+	uv run pyright tests
 
 sam-build-prod:
 	sam build --parameter-overrides Stage=prod TelegramApiKey=$(TELEGRAM_API_TOKEN)
@@ -50,7 +50,7 @@ sam-local-start: sam-build-dev
 	sam local start-api --parameter-overrides Stage=dev TelegramApiKey=$(TELEGRAM_API_TOKEN) DdUrl=$(DB_URL)
 
 test:
-	pytest
+	uv run pytest
 
 test-coverage:
-	pytest --cov=reporting
+	uv run pytest --cov=reporting

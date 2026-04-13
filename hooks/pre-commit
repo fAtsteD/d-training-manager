@@ -2,7 +2,6 @@
 
 echo "Running format and type checking"
 
-. .venv/bin/activate
 make check
 RESULT=$?
 
