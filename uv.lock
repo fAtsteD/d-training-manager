@@ -267,6 +267,7 @@ build = [
 ]
 dev = [
     { name = "black" },
+    { name = "factory-boy" },
     { name = "faker" },
     { name = "isort" },
     { name = "moto" },
@@ -295,6 +296,7 @@ build = [
 ]
 dev = [
     { name = "black", specifier = ">=25.1.0" },
+    { name = "factory-boy", specifier = ">=3.3.3" },
     { name = "faker", specifier = ">=37.3.0" },
     { name = "isort", specifier = ">=6.0.1" },
     { name = "moto", specifier = ">=5.1.19" },
