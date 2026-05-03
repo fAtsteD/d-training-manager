@@ -1,4 +1,4 @@
-from d_training_manager.telegram import bot
+from d_training_manager.telegram import telegram_bot
 from tests.fixtures.telegram import TelebotMock, TelegramCreateTextMessage
 
 
@@ -8,7 +8,7 @@ def test_help_message(
 ):
     telegram_command = telegram_create_text_message("/help")
 
-    bot.process_update_dict(telegram_command)
+    telegram_bot.process_update_dict(telegram_command)
 
     assert len(telegram_bot_mock.send_messages) == 1
     assert telegram_bot_mock.send_messages[0].chat_id == telegram_command["message"]["chat"]["id"]

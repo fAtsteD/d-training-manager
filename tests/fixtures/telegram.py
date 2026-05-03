@@ -8,7 +8,7 @@ from telebot import REPLY_MARKUP_TYPES, TeleBot
 from telebot.types import LinkPreviewOptions, Message, MessageEntity, ReplyParameters
 
 from d_training_manager import config
-from d_training_manager.telegram import bot
+from d_training_manager.telegram import telegram_bot
 
 
 class TelebotMock(TeleBot):
@@ -96,9 +96,9 @@ def telegram_bot_mock(
         threaded=False,
         token=config.telegram.api_token,
     )
-    bot.register_handlers(telebot_mock)
+    telegram_bot.register_handlers(telebot_mock)
     monkeypatch.setattr(
-        bot,
+        telegram_bot,
         "create_bot",
         lambda: telebot_mock,
     )

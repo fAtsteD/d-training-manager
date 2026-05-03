@@ -1,6 +1,6 @@
 from telebot.types import ReplyKeyboardMarkup
 
-from d_training_manager.telegram import bot
+from d_training_manager.telegram import telegram_bot
 from tests.factories.database import DBUserFactory
 from tests.fixtures.telegram import TelebotMock, TelegramCreateTextMessage
 
@@ -11,7 +11,7 @@ def test_request_contact(
 ):
     telegram_command = telegram_create_text_message("/start")
 
-    bot.process_update_dict(telegram_command)
+    telegram_bot.process_update_dict(telegram_command)
 
     assert len(telegram_bot_mock.send_messages) == 1
     assert telegram_bot_mock.send_messages[0].chat_id == telegram_command["message"]["chat"]["id"]
@@ -32,7 +32,7 @@ def test_registered_user(
     user = DBUserFactory.create()
     telegram_command = telegram_create_text_message("/start", from_id=int(user.telegram_id))
 
-    bot.process_update_dict(telegram_command)
+    telegram_bot.process_update_dict(telegram_command)
 
     assert len(telegram_bot_mock.send_messages) == 1
     assert telegram_bot_mock.send_messages[0].chat_id == telegram_command["message"]["chat"]["id"]

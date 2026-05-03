@@ -1,6 +1,6 @@
 from faker import Faker
 
-from d_training_manager.telegram import bot
+from d_training_manager.telegram import telegram_bot
 from tests.fixtures.telegram import TelebotMock, TelegramCreateContactMessage
 
 
@@ -20,7 +20,7 @@ def test_contact_registered_successfully(
         user_phone_number=user_phone_number,
     )
 
-    bot.process_update_dict(telegram_user_contact)
+    telegram_bot.process_update_dict(telegram_user_contact)
 
     assert len(telegram_bot_mock.send_messages) == 1
     assert telegram_bot_mock.send_messages[0].chat_id == telegram_user_contact["message"]["chat"]["id"]

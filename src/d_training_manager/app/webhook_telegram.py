@@ -2,7 +2,7 @@ from aws_lambda_powertools import Logger, Metrics, Tracer
 from aws_lambda_powertools.event_handler.api_gateway import Router
 from aws_lambda_powertools.metrics import MetricUnit
 
-from d_training_manager.telegram import bot
+from d_training_manager.telegram import telegram_bot
 
 router = Router()
 
@@ -19,7 +19,7 @@ def webhook_telegram() -> tuple:
     logger.info(f"Telegram Webhook Event received")
 
     try:
-        bot.process_update_dict(router.current_event.json_body)
+        telegram_bot.process_update_dict(router.current_event.json_body)
     except Exception as error:
         logger.error(f"Error processing Telegram webhook", exc_info=error)
         metrics.add_metric(name="WebhookTelegramErrors", unit=MetricUnit.Count, value=1)
