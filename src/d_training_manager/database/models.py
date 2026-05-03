@@ -32,8 +32,23 @@ class DBUser(Model):
 
         phone = UnicodeAttribute(hash_key=True)
 
-    id = NumberAttribute(hash_key=True, null=False)
+    class DBIndexUserTelegram(GlobalSecondaryIndex):
+
+        class Meta:  # pyright: ignore
+            index_name = f"users-telegram-index"
+            read_capacity_units = 1
+            write_capacity_units = 1
+            projection = AllProjection()
+
+        telegram_id = NumberAttribute(hash_key=True)
+        phone = UnicodeAttribute(range_key=True)
+
+    created_at = NumberAttribute(null=False)
+    id = UnicodeAttribute(hash_key=True, null=False)
     first_name = UnicodeAttribute(null=False)
     last_name = UnicodeAttribute(null=False)
     phone = UnicodeAttribute()
     phone_index = DBIndexUserPhone()
+    telegram_id = NumberAttribute()
+    telegram_index = DBIndexUserTelegram()
+    updated_at = NumberAttribute(null=False)

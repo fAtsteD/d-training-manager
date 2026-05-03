@@ -2,8 +2,8 @@ import json
 from dataclasses import dataclass
 from urllib.parse import urlencode
 
-import faker
 import pytest
+from faker import Faker
 
 from d_training_manager import app
 
@@ -125,7 +125,7 @@ class HttpApiTestClient:
 @pytest.fixture
 def http_api_client(
     lambda_context: LambdaContext,
-    faker: faker.Faker,
+    faker: Faker,
     stage: str,
 ) -> HttpApiTestClient:
     return HttpApiTestClient(
@@ -136,7 +136,7 @@ def http_api_client(
 
 
 @pytest.fixture
-def lambda_context(faker: faker.Faker) -> LambdaContext:
+def lambda_context(faker: Faker) -> LambdaContext:
     return LambdaContext(
         aws_request_id=str(faker.uuid4()),
     )

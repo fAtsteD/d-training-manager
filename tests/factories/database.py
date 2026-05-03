@@ -27,7 +27,10 @@ class DBUserFactory(BaseFactory[DBUser]):
     class Meta:  # pyright: ignore
         model = DBUser
 
-    id = factory.faker.Faker("random_int", min=1, max=10000)
+    created_at = factory.faker.Faker("unix_time")
+    id = factory.faker.Faker("uuid4")
     first_name = factory.faker.Faker("first_name")
     last_name = factory.faker.Faker("last_name")
     phone = factory.faker.Faker("phone_number")
+    telegram_id = factory.faker.Faker("random_int", min=1, max=1000000)
+    updated_at = factory.faker.Faker("unix_time")

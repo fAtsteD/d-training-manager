@@ -2,7 +2,7 @@ from telebot import TeleBot
 from telebot.types import Update
 
 from d_training_manager import config
-from d_training_manager.telegram.handlers import handler_help
+from d_training_manager.telegram.handlers import handler_contact, handler_help, handler_start
 
 
 def create_bot() -> TeleBot:
@@ -24,7 +24,17 @@ def process_update_dict(update: dict) -> None:
 
 def register_handlers(bot: TeleBot) -> None:
     bot.register_message_handler(
+        callback=handler_contact.process_message,
+        content_types=["contact"],
+        pass_bot=True,
+    )
+    bot.register_message_handler(
         callback=handler_help.process_message,
-        commands=["help", "start"],
+        commands=["help"],
+        pass_bot=True,
+    )
+    bot.register_message_handler(
+        callback=handler_start.process_message,
+        commands=["start"],
         pass_bot=True,
     )
