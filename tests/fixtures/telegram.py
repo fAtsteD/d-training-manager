@@ -95,8 +95,9 @@ def telegram_bot_mock(
         faker=faker,
         threaded=False,
         token=config.telegram.api_token,
+        use_class_middlewares=True,
     )
-    telegram_bot.register_handlers(telebot_mock)
+    telegram_bot.initialize_bot(telebot_mock)
     monkeypatch.setattr(
         telegram_bot,
         "create_bot",
