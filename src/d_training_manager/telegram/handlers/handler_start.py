@@ -1,9 +1,14 @@
+from aws_lambda_powertools import Logger, Tracer
 from telebot import TeleBot
 from telebot.types import KeyboardButton, Message, ReplyKeyboardMarkup
 
 from d_training_manager.telegram import telegram_user
 
+logger = Logger(child=True)
+tracer = Tracer()
 
+
+@tracer.capture_method
 def process_message(message: Message, bot: TeleBot) -> None:
     user = telegram_user.get_user_by_message(message)
 
@@ -29,3 +34,4 @@ def _request_contact(bot: TeleBot, chat_id: int) -> None:
         "Hello! I am your training manager bot.\n" + "Please share your phone number to authenticate.",
         reply_markup=markup,
     )
+    logger.info("Requested contact information from user")
