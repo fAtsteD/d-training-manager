@@ -3,8 +3,8 @@ from typing import Optional
 from telebot import TeleBot
 from telebot.types import Message
 
+from d_training_manager.database import user_registry
 from d_training_manager.database.models import DBUser
-from d_training_manager.database.registry_user import UserRegistry
 
 
 def process_message(message: Message, bot: TeleBot) -> None:
@@ -48,7 +48,6 @@ def _update_user(
     first_name: str,
     last_name: Optional[str] = None,
 ) -> None:
-    user_registry = UserRegistry()
     user = user_registry.get_by_telegram_id(telegram_id)
 
     if not user:
@@ -57,7 +56,6 @@ def _update_user(
     if not user:
         user = DBUser()
 
-    user_registry = UserRegistry()
     user.phone = phone_number
     user.telegram_id = telegram_id
 
