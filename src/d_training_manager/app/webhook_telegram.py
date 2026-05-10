@@ -13,7 +13,7 @@ tracer = Tracer()
 
 @router.post("/")
 @tracer.capture_method
-def webhook_telegram() -> tuple:
+def webhook_telegram() -> tuple[None, int]:
     metrics.add_metric(name="WebhookTelegramInvocations", unit=MetricUnit.Count, value=1)
     router.current_event.body
     logger.info(f"Telegram Webhook Event received")

@@ -5,7 +5,7 @@ from typing import Optional, Protocol, Union
 import pytest
 from faker import Faker
 from telebot import REPLY_MARKUP_TYPES, TeleBot
-from telebot.types import LinkPreviewOptions, Message, MessageEntity, ReplyParameters
+from telebot.types import LinkPreviewOptions, Message, MessageEntity, ReplyParameters, SuggestedPostParameters
 
 from d_training_manager import config
 from d_training_manager.telegram import telegram_bot
@@ -36,6 +36,8 @@ class TelebotMock(TeleBot):
         business_connection_id: Optional[str] = None,
         message_effect_id: Optional[str] = None,
         allow_paid_broadcast: Optional[bool] = None,
+        direct_messages_topic_id: Optional[int] = None,
+        suggested_post_parameters: Optional[SuggestedPostParameters] = None,
     ) -> Message:
         self.send_messages.append(
             TelebotSendMessageDict(

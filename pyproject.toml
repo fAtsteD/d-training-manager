@@ -4,16 +4,16 @@ requires = ["setuptools", "wheel"]
 
 [project]
 name = "d-training-manager"
-requires-python = "==3.13.*"
+requires-python = "==3.14.*"
 version = "0.0.1"
 dependencies = [
-    "aws-lambda-powertools[tracer]==3.10.*",
-    "boto3==1.37.*",
-    "factory-boy==3.3.*",
-    "pydantic==2.11.*",
-    "pynamodb==6.1.*",
-    "pytelegrambotapi==4.26.*",
-    "requests==2.32.*",
+    "aws-lambda-powertools[tracer]>=3.10.0",
+    "boto3>=1.37.38",
+    "factory-boy>=3.3.3",
+    "pydantic>=2.11.10",
+    "pynamodb>=6.1.0",
+    "pytelegrambotapi>=4.26.0",
+    "requests>=2.32.5",
 ]
 
 [dependency-groups]
@@ -38,7 +38,7 @@ line-length = 120
 line_length = 120
 profile = "black"
 extend_skip = [".aws-sam"]
-py_version = 313
+py_version = 314
 
 [[tool.mypy.overrides]]
 module = ["telebot.*"]
@@ -46,7 +46,7 @@ ignore_missing_imports = true
 
 [tool.pyright]
 include = ["src", "tests"]
-pythonVersion = "3.13"
+pythonVersion = "3.14"
 reportUnusedImport = true
 typeCheckingMode = "standard"
 useLibraryCodeForTypes = true

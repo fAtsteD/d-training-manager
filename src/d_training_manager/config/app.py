@@ -6,6 +6,7 @@ from enum import Enum
 class Stage(Enum):
     Development = "dev"
     Production = "prod"
+    Test = "test"
 
 
 @dataclass
@@ -17,6 +18,10 @@ class AppConfig:
     @property
     def is_production(self) -> bool:
         return self.stage == Stage.Production
+
+    @property
+    def is_test(self) -> bool:
+        return self.stage == Stage.Test
 
     @property
     def stage(self) -> Stage:
